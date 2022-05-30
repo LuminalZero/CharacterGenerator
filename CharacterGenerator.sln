@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32519.379
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CharacterGenerator.DesktopApp", "CharacterGenerator.DesktopApp\CharacterGenerator.DesktopApp.csproj", "{ED1EC471-153D-41C0-A66E-C61ED2026308}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ED1EC471-153D-41C0-A66E-C61ED2026308}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED1EC471-153D-41C0-A66E-C61ED2026308}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED1EC471-153D-41C0-A66E-C61ED2026308}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED1EC471-153D-41C0-A66E-C61ED2026308}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {56B69E9B-E1B8-4ADD-99AF-78A487D89925}
+	EndGlobalSection
+EndGlobal
