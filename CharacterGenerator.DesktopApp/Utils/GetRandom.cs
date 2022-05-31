@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace CharacterGenerator.DesktopApp
+namespace CharacterGenerator.DesktopApp.Utils
 {
     /// <summary>Creates and returns a variety of random value types.</summary>
     [DebuggerStepThrough]

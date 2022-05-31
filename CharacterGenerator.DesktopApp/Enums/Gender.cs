@@ -1,4 +1,4 @@
-﻿namespace CharacterGenerator.DesktopApp
+﻿namespace CharacterGenerator.DesktopApp.Enums
 {
     public enum Gender
     {

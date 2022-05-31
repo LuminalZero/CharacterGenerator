@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
+using CharacterGenerator.DesktopApp.Enums;
+using CharacterGenerator.DesktopApp.Models;
+using CharacterGenerator.DesktopApp.Services;
 
 namespace CharacterGenerator.DesktopApp
 {
@@ -9,9 +12,12 @@ namespace CharacterGenerator.DesktopApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly ICharacterGeneratorService _characterGeneratorService;
+
+        public MainWindow(ICharacterGeneratorService characterGeneratorService)
         {
             InitializeComponent();
+            this._characterGeneratorService = characterGeneratorService;
         }
 
         private async void GenerateButton_Click(object sender, RoutedEventArgs e)
@@ -64,18 +70,13 @@ namespace CharacterGenerator.DesktopApp
         {
             var gender = GetGender();
 
-            return new Character
-            {
-                Gender = gender,
-                Name = GetName(gender == Gender.Male),
-                Stats = GetStats(),
-            };
+            return _characterGeneratorService.GenerateCharacter(gender);
         }
 
         private void ShowCharacter(Character character)
         {
             ShowName(character.Name);
-            ShowStats(character.Stats);
+            ShowStats(character);
         }
 
         private Gender GetGender()
@@ -90,39 +91,19 @@ namespace CharacterGenerator.DesktopApp
             return isMale ? Gender.Male : Gender.Female;
         }
 
-        private string GetName(bool isMale)
-        {
-            return GetRandom.FirstName(isMale);
-        }
-
-        private Stats GetStats()
-        {
-            var stats = new Stats
-            {
-                Charisma = GetRandom.Int32(1, 18),
-                Constitution = GetRandom.Int32(1, 18),
-                Dexterity = GetRandom.Int32(1, 18),
-                Intelligence = GetRandom.Int32(1, 18),
-                Strength = GetRandom.Int32(1, 18),
-                Wisdom = GetRandom.Int32(1, 18),
-            };
-
-            return stats;
-        }
-
         private void ShowName(string name)
         {
             NameTextBox.Text = name;
         }
 
-        private void ShowStats(Stats stats)
+        private void ShowStats(Character character)
         {
-            Charisma.Content = stats.Charisma;
-            Constitution.Content = stats.Constitution;
-            Dexterity.Content = stats.Dexterity;
-            Intelligence.Content = stats.Intelligence;
-            Strength.Content = stats.Strength;
-            Wisdom.Content = stats.Wisdom;
+            Charisma.Content = character.Charisma;
+            Constitution.Content = character.Constitution;
+            Dexterity.Content = character.Dexterity;
+            Intelligence.Content = character.Intelligence;
+            Strength.Content = character.Strength;
+            Wisdom.Content = character.Wisdom;
         }
 
         private void ShowGeneratingStarted()

@@ -1,10 +1,11 @@
-﻿namespace CharacterGenerator.DesktopApp
+﻿using CharacterGenerator.DesktopApp.Enums;
+
+namespace CharacterGenerator.DesktopApp.Models
 {
-    internal class Stats
+    public class Character
     {
-        public Stats()
-        {
-        }
+        public string Name { get; internal set; }
+        public Gender Gender { get; internal set; }
 
         public int Charisma { get; internal set; }
         public int Constitution { get; internal set; }
