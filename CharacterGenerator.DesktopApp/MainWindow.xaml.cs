@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using CharacterGenerator.DesktopApp.Enums;
@@ -7,9 +8,6 @@ using CharacterGenerator.DesktopApp.Services;
 
 namespace CharacterGenerator.DesktopApp
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private readonly ICharacterGeneratorService _characterGeneratorService;
@@ -24,7 +22,7 @@ namespace CharacterGenerator.DesktopApp
         {
             try
             {
-                DisableGenerateButton();
+                DisableForm();
                 ShowGeneratingStarted();
                 ShowProgressStarted();
 
@@ -39,38 +37,36 @@ namespace CharacterGenerator.DesktopApp
             finally
             {
                 ShowProgressFinished();
-                EnableGenerateButton();
+                EnableForm();
             }
         }
 
-        private void EnableGenerateButton()
+        private void EnableForm()
         {
+            FemaleRadioButton.IsEnabled = true;
             GenerateButton.IsEnabled = true;
+            MaleRadioButton.IsEnabled = true;
         }
 
-        private void DisableGenerateButton()
+        private void DisableForm()
         {
+            FemaleRadioButton.IsEnabled = false;
             GenerateButton.IsEnabled = false;
+            MaleRadioButton.IsEnabled = false;
         }
 
         private async Task GenerateCharacter()
         {
             await Task.Run(() =>
             {
-                var character = GetCharacter();
+                Thread.Sleep(TimeSpan.FromSeconds(2));
+                
+                var gender = Dispatcher.Invoke(() => GetGender());
 
-                Dispatcher.Invoke((Delegate)(() =>
-                {
-                    ShowCharacter(character);
-                }));
+                var character = _characterGeneratorService.GenerateCharacter(gender);
+
+                Dispatcher.Invoke(() => ShowCharacter(character));
             });
-        }
-
-        private Character GetCharacter()
-        {
-            var gender = GetGender();
-
-            return _characterGeneratorService.GenerateCharacter(gender);
         }
 
         private void ShowCharacter(Character character)
@@ -81,14 +77,7 @@ namespace CharacterGenerator.DesktopApp
 
         private Gender GetGender()
         {
-            bool isMale = true;
-
-            Dispatcher.Invoke(() =>
-            {
-                isMale = MaleRadioButton.IsChecked ?? true;
-            });
-
-            return isMale ? Gender.Male : Gender.Female;
+            return (MaleRadioButton.IsChecked ?? false) ? Gender.Male : Gender.Female;
         }
 
         private void ShowName(string name)
